@@ -16,6 +16,7 @@ certifi==2020.4.5.1
 cffi==1.14.5
 chardet==3.0.4
 chromedriver==2.24.1
+click==8.0.1
 colorama==0.4.4
 colorlog==4.7.2
 colormap==1.0.3
@@ -38,6 +39,7 @@ email-validator==1.1.2
 fake-useragent==0.1.11
 feedparser==6.0.2
 filelock==3.0.12
+Flask==2.0.1
 flatbuffers==1.12
 future==0.18.2
 gast==0.4.0
@@ -50,6 +52,8 @@ google-auth-oauthlib==0.4.3
 google-pasta==0.2.0
 googleapis-common-protos==1.53.0
 grpcio==1.34.1
+gunicorn==20.1.0
+guppy3==3.1.0
 h5py==3.1.0
 html-parser==0.2
 httplib2==0.19.1
@@ -67,16 +71,20 @@ intrinio-sdk==5.11.0
 ipykernel==5.5.0
 ipython==7.21.0
 ipython-genutils==0.2.0
+itsdangerous==2.0.1
 jedi==0.18.0
+Jinja2==3.0.1
 joblib==1.0.1
 jupyter-client==6.1.12
 jupyter-core==4.7.1
 Keras-Applications==1.0.8
 Keras-Preprocessing==1.1.2
 kiwisolver==1.3.1
+line-profiler==3.2.6
 lxml==4.6.2
 MACD==1.0
 Markdown==3.3.4
+MarkupSafe==2.0.1
 matplotlib==3.3.4
 mock==4.0.3
 modules==1.0.0
@@ -187,7 +195,7 @@ webdriver-manager==3.3.0
 websocket-client==0.58.0
 websockets==8.1
 webull==0.3.4
-Werkzeug==1.0.1
+Werkzeug==2.0.1
 wrapt==1.12.1
 yahoo-fin==0.8.8
 yfinance==0.1.59
