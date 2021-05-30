@@ -14,7 +14,7 @@ with open("iv_stocks.txt", "r") as stock_name:
     iv_stocks=[i.strip() for line in stock_name for i in line.split(',') if i]  
 print(iv_stocks)
 # @profile
-def main():
+def app():
     while True:
         for stock in stock_list:
         # for stock in most_shorted_stocks:
@@ -28,4 +28,4 @@ def main():
             print(stock)
             send_text_of_json(stock)
 
-main()
+app()
