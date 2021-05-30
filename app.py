@@ -28,4 +28,5 @@ def app():
             print(stock)
             send_text_of_json(stock)
 
-app()
+if __name__ == '__main__':
+    app(debug=True)
