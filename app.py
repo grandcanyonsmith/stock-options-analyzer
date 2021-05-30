@@ -29,4 +29,4 @@ def app():
             send_text_of_json(stock)
 
 if __name__ == '__main__':
-    app(debug=True)
+    app()
