@@ -1,0 +1,7 @@
+twilio
+requests
+tradingview_ta
+requests
+json
+html.parser
+operator

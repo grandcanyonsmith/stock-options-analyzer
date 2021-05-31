@@ -9,6 +9,7 @@ requests = "*"
 bs4 = "*"
 lxml = "*"
 twilio = "*"
+"html.parser" = "*"
 
 [dev-packages]
 
