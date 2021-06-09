@@ -7,6 +7,8 @@ def extract_stock_previous_and_current_price(ticker):
     today_price_quote = r.json()    
     current_price = today_price_quote['c']
     previous_day_price = today_price_quote['pc']
+    print("pc",previous_day_price)
+    [print("c",current_price)]
     return current_price, previous_day_price
 
 def get_resistance_levels(ticker, interval):
@@ -42,7 +44,7 @@ def check_if_resistance_broken(ticker, interval, current_price, previous_close):
 
 def get_all_resistance_levels(ticker,current_price,previous_close):
     resistance_level_bank = []
-    resistance_levels = ['5','15','D','W']
+    resistance_levels = ['5','15','30','60','D','W']
     for level in resistance_levels:
         resistance_level_bank.append(check_if_resistance_broken(ticker,level,current_price,previous_close))
 
