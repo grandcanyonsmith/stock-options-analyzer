@@ -1,9 +1,11 @@
 import requests
 import json
 
+finnhub_api_key_1 = 'c30dh2iad3i9gms5oiq0'
+finnhub_api_key_2 = 'c1n20v237fkvp2lsh1ag'
 
 def extract_stock_previous_and_current_price(ticker):
-    r = requests.get('https://finnhub.io/api/v1/quote?symbol='+ticker+'&token=c1n20v237fkvp2lsh1ag')
+    r = requests.get('https://finnhub.io/api/v1/quote?symbol=' + ticker + '&token=' + finnhub_api_key_1)
     today_price_quote = r.json()    
     current_price = today_price_quote['c']
     previous_day_price = today_price_quote['pc']
@@ -12,7 +14,7 @@ def extract_stock_previous_and_current_price(ticker):
     return current_price, previous_day_price
 
 def get_resistance_levels(ticker, interval):
-    r = requests.get('https://finnhub.io/api/v1/scan/support-resistance?symbol='+ str(ticker) + '&resolution=' + str(interval) + '&token=c1n20v237fkvp2lsh1ag')
+    r = requests.get('https://finnhub.io/api/v1/scan/support-resistance?symbol='+ str(ticker) + '&resolution=' + str(interval) + '&token=' + finnhub_api_key_2)
     resistance_levels = r.json()
     resistance_levels = resistance_levels['levels']
     print(resistance_levels)

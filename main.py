@@ -4,10 +4,11 @@ from ScrapedStocks.webscrape_most_shorted_stocks import scrape_most_shorted_stoc
 
 most_shorted_stocks = scrape_most_shorted_stocks()
 
+
+with open("ScrapedStocks/highest_IV_stocks.txt", "r") as stock_name:
+    iv_stocks=[i.strip() for line in stock_name for i in line.split(',') if i]
 with open("ScrapedStocks/150_motley_fool_stocks.txt", "r") as stock_name:
     stock_list=[i.strip() for line in stock_name for i in line.split(',') if i]  
-with open("ScrapedStocks/highest_IV_stocks.txt", "r") as stock_name:
-    iv_stocks=[i.strip() for line in stock_name for i in line.split(',') if i]  
 
 def main():
     while True:
