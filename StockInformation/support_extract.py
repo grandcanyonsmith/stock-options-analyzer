@@ -88,8 +88,6 @@ def get_next_high_for_any_interval(current_price):
 def create_resistance_report(ticker,current_price,previous_close):
     get_resistance = get_all_resistance_levels(ticker,current_price,previous_close)
     next_highest_resistance, i = get_next_high_for_any_interval(current_price)
-    # interval_for_next_highest = all_levels[i]
-    # print(interval_for_next_highest)
     try:
         resistance = float(get_resistance['Resistance']).__round__(2)
         break_through = get_resistance['break_through']
