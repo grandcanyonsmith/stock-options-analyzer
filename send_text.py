@@ -19,12 +19,12 @@ def add_stock_to_already_sent_today_list(stock):
     with open("bought.txt", "a") as stock_name:
         stock_name.write("\n"+stock)
 
-def send_client_text(phone_number,stock,current_price,resistance,day_gain,drop_needed,stocks_already_sent_today,gain_needed,next_resistance,time_interval):
+def send_client_text(phone_number,stock,current_price,resistance,day_gain,drop_needed,stocks_already_sent_today,gain_needed,next_resistance,past_time_interval, next_time_interval):
     message = client.messages.create(
-                            body=" Trade Alert: " + stock + " $" + str(current_price) + "         +" + str(day_gain) + "%" +
+                            body=" Trade Alert: " + stock + " $" + str(current_price) + "       +" + str(day_gain) + "%" +
                                 "\n=======================" +
-                                "\n" + " Resistance: $" + str(next_resistance) + "             (+" + str(gain_needed) + "%)" +
-                                "\n" + "(" + time_interval + ")" + "Support: $" + str(resistance) + "             (-" + str(drop_needed) + "%)",
+                                "\n" + "(" + next_time_interval + ")" + " Resist. : $" + str(next_resistance) + "        (+" + str(gain_needed) + "%)" +
+                                "\n" + "(" + past_time_interval + ")" + "Support: $" + str(resistance) + "        (-" + str(drop_needed) + "%)",
                             from_='+13852336341',
                             to=phone_number
                         )
@@ -40,7 +40,7 @@ def analyze_equities(stock):
             if one_hour_recommendation == 'STRONG_BUY':
                 one_minute_recommendation = stock_analysis(stock,'1m')
                 current_price, previous_close = extract_stock_previous_and_current_price(stock)
-                break_through_report, breakthrough_level, time_interval, resistance, next_resistance = create_resistance_report(stock, current_price=current_price, previous_close=previous_close)
+                break_through_report, breakthrough_level, past_time_interval, next_time_interval, resistance, next_resistance = create_resistance_report(stock, current_price=current_price, previous_close=previous_close)
 
                 if breakthrough_level == 'True':
                     day_gain = calculate_stock_percentage_gain_today(current_price=current_price,previous_close=previous_close)
@@ -50,7 +50,7 @@ def analyze_equities(stock):
 
                     if stock not in stocks_already_sent_today:
                         for phone_number in client_phone_contact:
-                            send_client_text(phone_number=phone_number,stock=stock,current_price=current_price,resistance=resistance,day_gain=day_gain,drop_needed=drop_needed,gain_needed=gain_needed,stocks_already_sent_today=stocks_already_sent_today,next_resistance=next_resistance,time_interval=time_interval)
+                            send_client_text(phone_number=phone_number,stock=stock,current_price=current_price,resistance=resistance,day_gain=day_gain,drop_needed=drop_needed,gain_needed=gain_needed,stocks_already_sent_today=stocks_already_sent_today,next_resistance=next_resistance,past_time_interval=past_time_interval,next_time_interval=next_time_interval)
                         add_stock_to_already_sent_today_list(stock)
                     else:
                         print("Already sent text for", stock)

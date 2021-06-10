@@ -5,6 +5,7 @@ finnhub_api_key_1 = 'c30dh2iad3i9gms5oiq0'
 finnhub_api_key_2 = 'c1n20v237fkvp2lsh1ag'
 
 all_resistances = []
+all_levels = []
 
 def extract_stock_previous_and_current_price(ticker):
     r = requests.get('https://finnhub.io/api/v1/quote?symbol=' + ticker + '&token=' + finnhub_api_key_1)
@@ -20,7 +21,9 @@ def get_resistance_levels(ticker, interval):
     if len(resistance_levels) != 0:
         print(interval,resistance_levels)
         for x in resistance_levels:
+            all_levels.append(interval)
             all_resistances.append(x)
+    
     return resistance_levels
 
 def check_if_resistance_broken(ticker, interval, current_price, previous_close):
@@ -72,33 +75,41 @@ def get_all_resistance_levels(ticker,current_price,previous_close):
             return resistance_level
 
 def get_next_high_for_any_interval(current_price):
+    i = 0    
     all_resistances.sort(reverse=False)
     for resistance in all_resistances:
+        i += 1
         if resistance < current_price:
             continue
         else:
-            return resistance
+            return resistance, i
             break
 
 def create_resistance_report(ticker,current_price,previous_close):
     get_resistance = get_all_resistance_levels(ticker,current_price,previous_close)
+    next_highest_resistance, i = get_next_high_for_any_interval(current_price)
+    # interval_for_next_highest = all_levels[i]
+    # print(interval_for_next_highest)
     try:
         resistance = float(get_resistance['Resistance']).__round__(2)
         break_through = get_resistance['break_through']
-        time_interval = get_resistance['time_interval']
+        past_time_interval = get_resistance['time_interval']
+        next_time_interval = all_levels[i]
         price = get_resistance['price']
-        next_resistance = float(get_next_high_for_any_interval(current_price)).__round__(2)
-        words = " crossed resistance today at " + str(resistance) + " for " + time_interval + " time interval. Price is " + str(price) + "."
-        return words, break_through, time_interval, resistance, next_resistance
+        next_resistance = float(next_highest_resistance).__round__(2)
+        words = " crossed resistance today at " + str(resistance) + " for " + past_time_interval + " time interval. Price is " + str(price) + "."
+        return words, break_through, past_time_interval, next_time_interval, resistance, next_resistance
 
     except:
         Exception
         break_through = " "
         words = "No resistance broken"
-        time_interval = " "
+        past_time_interval = " "
+        next_time_interval = " "
         resistance = " "
         next_resistance = " "
-        return words, break_through, time_interval, resistance, next_resistance
+        print(Exception)
+        return words, break_through, past_time_interval, next_time_interval, resistance, next_resistance
 
 def calculate_stock_percentage_gain_today(current_price, previous_close):
     previous_close = float(previous_close)
@@ -113,3 +124,4 @@ def calculate_stock_gain_needed_to_break_next_resistance(current_price,next_resi
     next_resistance = float(next_resistance).__round__(2)
     gain_needed = ((-(current_price/next_resistance) + 1) * 100).__round__(2)
     return gain_needed
+
