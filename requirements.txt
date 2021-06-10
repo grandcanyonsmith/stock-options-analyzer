@@ -3,3 +3,4 @@ requests
 tradingview_ta
 requests
 html.parser
+bs4

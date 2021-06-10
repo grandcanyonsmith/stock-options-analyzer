@@ -8,6 +8,7 @@ twilio = "*"
 requests = "*"
 tradingview-ta = "*"
 html-parser = "*"
+bs4 = "*"
 
 [dev-packages]
 
