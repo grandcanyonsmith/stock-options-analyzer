@@ -4,6 +4,8 @@ import json
 finnhub_api_key_1 = 'c30dh2iad3i9gms5oiq0'
 finnhub_api_key_2 = 'c1n20v237fkvp2lsh1ag'
 
+next_high = []
+
 def extract_stock_previous_and_current_price(ticker):
     r = requests.get('https://finnhub.io/api/v1/quote?symbol=' + ticker + '&token=' + finnhub_api_key_1)
     today_price_quote = r.json()    
@@ -23,28 +25,30 @@ def get_resistance_levels(ticker, interval):
 i = 0
 def check_if_resistance_broken(ticker, interval, current_price, previous_close):
     resistance_levels = get_resistance_levels(ticker,interval)
-    print(len(resistance_levels))
+    # print(resistance_levels)
+    # print(len(resistance_levels))
     if len(resistance_levels) == 0:
         json = {"break_through": "False","price":current_price,"Resistance": "No Resistance Exists","time_interval":interval}
-        print(json)
+        # print(json)
     else:
         i = 0
         for level in resistance_levels:
             i += 1
             if current_price < level:
                 json = {"break_through": "False","price":current_price,"next_highest_resistance":level,"time_interval":interval}
-                print(json)
+                # print(interval)
+                # print(json)
                 break
             else:
                 if previous_close > level:
                     json = {"break_through": "False","price":current_price,"Resistance": "No Resistance Exists","time_interval":interval}
-                    print(json)
+                    # print(interval)
                     continue
                 else:
                     next_highest_resistance = resistance_levels[i]
                     json = {"break_through": "True","price":current_price,"Resistance":level,"time_interval":interval,"next_highest_resistance": next_highest_resistance}
-                    print(next_highest_resistance)
-                    print(json)
+                    # print(next_highest_resistance)
+                    # print(json)
                     break
         return json
 
@@ -53,18 +57,32 @@ def get_all_resistance_levels(ticker,current_price,previous_close):
     resistance_levels = ['5','15','30','60','D','W']
     for level in resistance_levels:
         resistance_level_bank.append(check_if_resistance_broken(ticker,level,current_price,previous_close))
-
+    # print("BANK",resistance_level_bank)
+    next_high = []
+    yet = []
     for resistance_level in resistance_level_bank:
+        # print("LVL BIH",resistance_level)
         try:
-            print(resistance_level['break_through'])
+            json = {"resistance": resistance_level['next_highest_resistance'], "hello": 5}
+            yet.append(json)
+            next_high.append(resistance_level['next_highest_resistance'])
+            if resistance_level['break_through'] == 'True':
+                print("Time Interval: ", resistance_level['time_interval'])
+                print("Resistance Broken: $", float(resistance_level['Resistance']).__round__(2))
+                print('Next Highest Resistance: $',float(resistance_level['next_highest_resistance']).__round__(2))
         except:
             Exception
-            print(Exception)
+    print("Next high: $",max(next_high))
+
+
+        
+            # print(Exception)
         # if resistance_level['break_through'] == 'True':
         #     return resistance_level
 
 def create_resistance_report(ticker,current_price,previous_close):
     get_resistance = get_all_resistance_levels(ticker,current_price,previous_close)
+    
     try:
         resistance = get_resistance['Resistance']
         break_through = get_resistance['break_through']
@@ -92,4 +110,4 @@ def yeet(ticker):
     
     current_price, previous_close = extract_stock_previous_and_current_price(ticker)
     create_resistance_report(ticker,current_price,previous_close)
-yeet('SDC')
+yeet('RH')

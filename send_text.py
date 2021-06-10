@@ -7,8 +7,8 @@ from env_vars import variables
 account_sid = variables['account_sid']
 auth_token = variables['auth_token']
 client = Client(account_sid, auth_token)
-client_phone_contact = ['+18016237631']
-# client_phone_contact = ['+18016237631','+18018752975','+13852673595']
+# client_phone_contact = ['+18016237631']
+client_phone_contact = ['+18016237631','+18018752975','+13852673595']
 
 def get_stocks_already_sent_today():
     with open("bought.txt", "r") as stock_name:
@@ -31,7 +31,7 @@ def send_client_text(phone_number,stock,current_price,resistance,day_gain,drop_n
 
 def analyze_equities(stock):
     five_minute_recommendation = stock_analysis(stock,'5m')
-    if five_minute_recommendation == 'BUY':    
+    if five_minute_recommendation == 'STRONG_BUY':    
         fifteen_minute_recommendation = stock_analysis(stock,'15m')
 
         if fifteen_minute_recommendation == 'STRONG_BUY':
@@ -53,5 +53,4 @@ def analyze_equities(stock):
                             send_client_text(phone_number=phone_number,stock=stock,current_price=current_price,resistance=resistance,day_gain=day_gain,drop_needed=drop_needed,gain_needed=gain_needed,stocks_already_sent_today=stocks_already_sent_today,next_resistance=next_resistance,time_interval=time_interval)
                         add_stock_to_already_sent_today_list(stock)
                     else:
-                        print("Already sent text for ", stock)
-                                              
+                        print("Already sent text for", stock)
