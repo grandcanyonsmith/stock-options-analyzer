@@ -7,8 +7,8 @@ from env_vars import variables
 account_sid = variables['account_sid']
 auth_token = variables['auth_token']
 client = Client(account_sid, auth_token)
-client_phone_contact = ['+18016237631']
-# client_phone_contact = ['+18016237631','+18018752975','+13852673595']
+# client_phone_contact = ['+18016237631']
+client_phone_contact = ['+18016237631','+18018752975','+13852673595']
 
 def get_stocks_already_sent_today():
     with open("bought.txt", "r") as stock_name:
