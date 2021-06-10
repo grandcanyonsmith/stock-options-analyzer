@@ -2,7 +2,6 @@ import time
 from bs4 import BeautifulSoup
 from requests import get
 import requests
-from lxml import html
 from bs4 import BeautifulSoup as BS
 from html.parser import HTMLParser
 from json import loads

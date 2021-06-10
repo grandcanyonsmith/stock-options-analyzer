@@ -4,13 +4,10 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-tradingview-ta = "*"
-requests = "*"
-bs4 = "*"
-lxml = "*"
 twilio = "*"
-"html.parser" = "*"
-pandas = "*"
+requests = "*"
+tradingview-ta = "*"
+html-parser = "*"
 
 [dev-packages]
 
