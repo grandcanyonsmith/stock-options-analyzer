@@ -19,6 +19,7 @@ def get_resistance_levels(ticker, interval):
     resistance_levels = resistance_levels['levels']
     print(resistance_levels)
     return resistance_levels
+
 i = 0
 def check_if_resistance_broken(ticker, interval, current_price, previous_close):
     resistance_levels = get_resistance_levels(ticker,interval)
@@ -45,7 +46,6 @@ def check_if_resistance_broken(ticker, interval, current_price, previous_close):
                     print(next_highest_resistance)
                     print(json)
                     break
-        
         return json
 
 def get_all_resistance_levels(ticker,current_price,previous_close):

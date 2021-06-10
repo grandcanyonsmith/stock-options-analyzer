@@ -17,8 +17,8 @@ def stock_analysis(stock,time_interval):
 
         analysis = handler.get_analysis()
         summary = analysis.summary
-        print(summary)
         overall_recommendation = summary['RECOMMENDATION']
+        print(time_interval,"=",overall_recommendation)
         return overall_recommendation
 
     except:
@@ -40,7 +40,7 @@ def nyse(stock, time_interval):
         analysis = handler.get_analysis()
         summary = analysis.summary
         overall_recommendation = summary['RECOMMENDATION']
-        print(summary)
+        print(time_interval,"=",overall_recommendation)
         return overall_recommendation
     except:
         Exception
