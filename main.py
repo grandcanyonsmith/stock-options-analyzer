@@ -32,6 +32,7 @@ def main():
 task = schedule.every().day.at("13:30").do(main)
 
 if __name__ == '__main__':
+    print("Going to run everyday at 7:30 mst")
     while True:
         schedule.run_pending()
         now = datetime.now()
