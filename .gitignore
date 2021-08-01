@@ -1,0 +1,3 @@
+BackTestDat/
+#Ignore back test data
+.BackTestDat
