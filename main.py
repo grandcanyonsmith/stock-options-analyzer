@@ -12,13 +12,19 @@ def main():
     while True:
         for stock in iv_stocks:
             print("\n" + "\n",stock)
-            analyze_equities(stock)
+            equity_type = "IV Stock"
+            print(equity_type)
+            analyze_equities(stock, equity_type)
         for stock in stock_list:
             print("\n" + "\n",stock)
-            analyze_equities(stock)
+            equity_type = "Motley Fool"
+            print(equity_type)
+            analyze_equities(stock, equity_type)
         for stock in most_shorted_stocks:
             print("\n" + "\n",stock)
-            analyze_equities(stock)
+            equity_type = "Most Shorted"
+            print(equity_type)
+            analyze_equities(stock, equity_type)
 
 if __name__ == '__main__':
     main()

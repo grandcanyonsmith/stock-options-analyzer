@@ -28,9 +28,10 @@ def scrape_highest_iv_stocks():
         stock_ticker = stock_quote['baseSymbol']
         if stock_ticker not in highest_iv_stocks:
             highest_iv_stocks.append(stock_ticker)
+    print(highest_iv_stocks)
     return highest_iv_stocks
 
 
 
 
-  
+scrape_highest_iv_stocks()

@@ -1,0 +1,17 @@
+
+what stills needs to be do;
+
+1. We need to be albe to get data for any intrade ticks that we please
+2. We theen need to format that data and it auto add it'self into tht google excel sheet
+3. After test that data, we can come up with a better gage on when to set strick or less strick stop lossses
+4. Be able to give the info we need with 20+ seonds with only insertng 3 data enpoints in less than 5 minutes.
+5. Show avobe all our overall gainz/losses on the website. We aren't embarresed by perfomance. Work and time will always tell.
+
+Phase ll
+1.Create website where we can discplay data fields in chronoloical order for people to be able to see for themselves.
+Guest list of 100 people will have the oppotunity to try it for free, then start paying $50/ month
+2.Data will be uploaded as it comes in. Once the 20 stop loss has trigged, it will be mareket as good.
+gold = new
+grew = normal
+green = traded and made proft
+red = stop loss kicked in and were'nt profitabble
