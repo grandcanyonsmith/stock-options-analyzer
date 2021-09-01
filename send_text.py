@@ -7,8 +7,8 @@ from env_vars import variables
 account_sid = variables['account_sid']
 auth_token = variables['auth_token']
 client = Client(account_sid, auth_token)
-# client_phone_contact = ['+18016237631','+18018752975','+13852673595']
-client_phone_contact = ['+18016237631']
+client_phone_contact = ['+18016237631','+18018752975','+13852673595','+17149242579']
+# client_phone_contact = ['+18016237631']
 
 def get_stocks_already_sent_today():
     with open("bought.txt", "r") as stock_name:
@@ -20,15 +20,17 @@ def add_stock_to_already_sent_today_list(stock):
         stock_name.write("\n"+stock)
 
 def send_client_text(phone_number,stock,current_price,resistance,day_gain,drop_needed,stocks_already_sent_today,gain_needed,next_resistance,past_time_interval, next_time_interval,equity_type):
+    print("sucessfully sent")    
+    print(phone_number)                    
     message = client.messages.create(
                             body=" Trade Alert: " + stock + " $" + str(current_price) + "       +" + str(day_gain) + "%  " +  equity_type +
                                 "\n=======================" +
                                 "\n" + "(" + next_time_interval + ")" + " Resist. : $" + str(next_resistance) + "        (+" + str(gain_needed) + "%)" +
                                 "\n" + "(" + past_time_interval + ")" + "Support: $" + str(resistance) + "        (-" + str(drop_needed) + "%)",
-                                # "\n" + equity_type,
                             from_='+13852336341',
                             to=phone_number
                         )
+    
 
 def analyze_equities(stock, equity_type):
     try:
@@ -41,7 +43,8 @@ def analyze_equities(stock, equity_type):
                 if four_hours == 'STRONG_BUY':
                     one_hour_recommendation = stock_analysis(stock,'1h')
                     fifteen_minute_recommendation = stock_analysis(stock,'15m')
-                    if one_hour_recommendation == 'STRONG_BUY' and fifteen_minute_recommendation == 'STRONG_BUY':
+                    if one_hour_recommendation == 'STRONG_BUY':
+                    # if one_hour_recommendation == 'STRONG_BUY' and fifteen_minute_recommendation == 'STRONG_BUY':
                         five_minute_recommendation = stock_analysis(stock,'5m')
                         one_minute_recommendation = stock_analysis(stock,'1m')
                         current_price, previous_close = extract_stock_previous_and_current_price(stock)
@@ -55,6 +58,8 @@ def analyze_equities(stock, equity_type):
                             if stock not in stocks_already_sent_today:
                                 print("okay")
                                 for phone_number in client_phone_contact:
+                                    print("text")
+                                    print(phone_number)
                                     send_client_text(phone_number=phone_number,stock=stock,current_price=current_price,resistance=resistance,day_gain=day_gain,drop_needed=drop_needed,gain_needed=gain_needed,stocks_already_sent_today=stocks_already_sent_today,next_resistance=next_resistance,past_time_interval=past_time_interval,next_time_interval=next_time_interval, equity_type=equity_type)
                                 add_stock_to_already_sent_today_list(stock)
                             else:
@@ -62,4 +67,4 @@ def analyze_equities(stock, equity_type):
     except:
         Exception
 
-# analyze_equities('PINS','FOOL')
+# analyze_equities('EQIX', 'FOOL')

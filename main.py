@@ -15,12 +15,11 @@ with open("ScrapedStocks/150_motley_fool_stocks.txt", "r") as stock_name:
     stock_list = [i.strip()
                   for line in stock_name for i in line.split(',') if i]
 
-
 def main():
     while True:
         for stock in iv_stocks:
             print("\n" + "\n",stock)
-            equity_type = "IV Stock"
+            equity_type = "Highest IV"
             print(equity_type)
             analyze_equities(stock, equity_type)
         for stock in stock_list:
@@ -41,9 +40,10 @@ if __name__ == '__main__':
     print("Going to run everyday at 7:30 mst")
     while True:
         schedule.run_pending()
+        # main()
         now = datetime.now()
         if now.hour == 20 and now.minute == 1:
             schedule.cancel_job(task)
             print("Sleeping...")
         time.sleep(1)
-        # main()
+        main()
