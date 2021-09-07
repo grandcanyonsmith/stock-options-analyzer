@@ -10,6 +10,7 @@ tradingview-ta = "*"
 html-parser = "*"
 bs4 = "*"
 schedule="*"
+python-dotenv = "*"
 
 [dev-packages]
 

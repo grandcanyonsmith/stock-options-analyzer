@@ -6,3 +6,4 @@ html.parser
 bs4
 schedule
 python_dotenv
+dotenv
