@@ -2,15 +2,14 @@ from tradingview_ta import TA_Handler, Interval, Exchange
 from StockInformation.stock_indicators_analysis import stock_analysis
 from twilio.rest import Client
 from StockInformation.support_extract import *
-from env_vars import variables
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# account_sid = variables['account_sid']
 account_sid = os.getenv('account_sid')
 auth_token = os.getenv('auth_token')
+
 
 client = Client(account_sid, auth_token)
 # client_phone_contact = ['+18016237631','+18018752975','+13852673595','+17149242579']
