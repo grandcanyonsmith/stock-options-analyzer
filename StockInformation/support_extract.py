@@ -104,7 +104,7 @@ def get_next_high_for_any_interval(current_price):
 def create_resistance_report(ticker,current_price,previous_close):
     get_resistance = get_all_resistance_levels(ticker,current_price,previous_close)
 
-    if get_resistance != None:
+    if get_resistance is not None:
         get_resistance = get_all_resistance_levels(ticker,current_price,previous_close)
         next_highest_resistance, interval = get_next_high_for_any_interval(current_price)
         resistance = float(get_resistance['Resistance']).__round__(2)
