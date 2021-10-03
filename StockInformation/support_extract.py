@@ -7,14 +7,16 @@ finnhub_api_key_2 = 'c1n20v237fkvp2lsh1ag'
 all_resistances = []
 
 def extract_stock_previous_and_current_price(ticker):
-    r = requests.get('https://finnhub.io/api/v1/quote?symbol=' + ticker + '&token=' + finnhub_api_key_1)
+    url = 'https://finnhub.io/api/v1/quote?symbol=' + ticker + '&token=' + finnhub_api_key_1
+    r = requests.get(url)
     today_price_quote = r.json()
     current_price = float(today_price_quote['c']).__round__(2)
     previous_close = float(today_price_quote['pc']).__round__(2)
     return current_price, previous_close
 
 def get_resistance_levels(ticker, interval):
-    r = requests.get('https://finnhub.io/api/v1/scan/support-resistance?symbol='+ str(ticker) + '&resolution=' + str(interval) + '&token=' + finnhub_api_key_2)
+    url = 'https://finnhub.io/api/v1/scan/support-resistance?symbol='+ str(ticker) + '&resolution=' + str(interval) + '&token=' + finnhub_api_key_2
+    r = requests.get(url)
     resistance_levels = r.json()
     resistance_levels = resistance_levels['levels']
     if len(resistance_levels) != 0:
