@@ -54,7 +54,12 @@ def analyze_equities(stock, equity_type):
                                 five_minute_recommendation = stock_analysis(stock,'5m')
                                 one_minute_recommendation = stock_analysis(stock,'1m')
                                 current_price, previous_close = extract_stock_previous_and_current_price(stock)
-                                break_through_report, breakthrough_level, past_time_interval, next_time_interval, resistance, next_resistance = create_resistance_report(stock, current_price=current_price, previous_close=previous_close)
+                                break_through_report,
+                                breakthrough_level,
+                                past_time_interval,
+                                next_time_interval,
+                                resistance,
+                                next_resistance = create_resistance_report(stock, current_price=current_price, previous_close=previous_close)
                                 if breakthrough_level == 'True':
                                     day_gain = calculate_stock_percentage_gain_today(current_price=current_price,previous_close=previous_close)
                                     drop_needed = calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price=current_price,resistance=resistance)
