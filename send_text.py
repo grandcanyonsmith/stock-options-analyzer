@@ -24,8 +24,12 @@ def add_stock_to_already_sent_today_list(stock):
     with open("bought.txt", "a") as stock_name:
         stock_name.write("\n"+stock)
 
-def send_client_text(phone_number,stock,current_price,resistance,day_gain,drop_needed,stocks_already_sent_today,gain_needed,next_resistance,past_time_interval, next_time_interval,equity_type):
-    print("sucessfully sent")    
+def send_client_text(
+                      phone_number, stock, current_price,
+                      resistance,day_gain,drop_needed,
+                      stocks_already_sent_today,gain_needed,next_resistance,
+                      past_time_interval, next_time_interval,equity_type):
+    print("sucessfully Sent")    
     print(phone_number)                    
     message = client.messages.create(
                             body=" Trade Alert: " + stock + " $" + str(current_price) + "       +" + str(day_gain) + "%  " +  equity_type +
