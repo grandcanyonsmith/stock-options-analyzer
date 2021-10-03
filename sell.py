@@ -1,7 +1,8 @@
 from tradingview_ta import TA_Handler, Interval, Exchange
 from StockInformation.stock_indicators_analysis import stock_analysis
 from twilio.rest import Client
-from StockInformation.support_extract import *
+# from StockInformation.support_extract import *
+from StockInformation.resistance_extract import *
 import os
 from dotenv import load_dotenv
 
@@ -12,8 +13,8 @@ auth_token = os.getenv('auth_token')
 
 
 client = Client(account_sid, auth_token)
-client_phone_contact = ['+18016237631','+18018752975','+13852673595','+17149242579']
-# client_phone_contact = ['+18016237631']
+# client_phone_contact = ['+18016237631','+18018752975','+13852673595','+17149242579']
+client_phone_contact = ['+18016237631']
 
 def get_stocks_already_sent_today():
     with open("bought.txt", "r") as stock_name:
@@ -40,17 +41,17 @@ def send_client_text(phone_number,stock,current_price,resistance,day_gain,drop_n
 def analyze_equities(stock, equity_type):
     try:
         one_month = stock_analysis(stock,'1M')
-        if one_month == 'STRONG_BUY':
+        if one_month == 'STRONG_SELL':
             one_week = stock_analysis(stock,'1W')
-            if one_week == 'STRONG_BUY':
+            if one_week == 'STRONG_SELL':
                 one_day = stock_analysis(stock,'1d')
-                if one_day == 'STRONG_BUY':
+                if one_day == 'STRONG_SELL':
                     four_hours = stock_analysis(stock,'4h')
-                    if four_hours == 'STRONG_BUY':
+                    if four_hours == 'STRONG_SELL':
                         one_hour_recommendation = stock_analysis(stock,'1h')
-                        if one_hour_recommendation == 'STRONG_BUY':
+                        if one_hour_recommendation == 'STRONG_SELL':
                             fifteen_minute_recommendation = stock_analysis(stock,'15m')
-                            if fifteen_minute_recommendation == 'STRONG_BUY':
+                            if fifteen_minute_recommendation == 'STRONG_SELL ':
                                 five_minute_recommendation = stock_analysis(stock,'5m')
                                 one_minute_recommendation = stock_analysis(stock,'1m')
                                 current_price, previous_close = extract_stock_previous_and_current_price(stock)
@@ -73,4 +74,15 @@ def analyze_equities(stock, equity_type):
     except:
         Exception
 
-    # analyze_equities('EQIX', 'FOOL')
+# analyze_equities('DRRX', 'FOOL')
+current_price, previous_close = extract_stock_previous_and_current_price('DNN')
+
+break_through_report, breakthrough_level, past_time_interval, next_time_interval, resistance, next_resistance = create_resistance_report('DNN', current_price=previous_close, previous_close=current_price)
+print(break_through_report,breakthrough_level, past_time_interval, next_time_interval, resistance, next_resistance)
+if breakthrough_level == 'True':
+    day_gain = calculate_stock_percentage_gain_today(current_price=current_price,previous_close=previous_close)
+    drop_needed = calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price=current_price,resistance=resistance)
+    gain_needed = calculate_stock_gain_needed_to_break_next_resistance(current_price=current_price,next_resistance=next_resistance)
+    print(day_gain)
+    print(drop_needed)
+    print(gain_needed)

@@ -12,8 +12,6 @@ def scrape_most_shorted_stocks():
     soup = BeautifulSoup(page.content, 'html.parser')
     bs = soup.prettify()
     scraped_most_shorted = soup.find_all('div', class_="cell__content fixed--cell")
-    most_shorted_stocks = []
-    for stock in scraped_most_shorted:
-        most_shorted_stocks.append(stock.text.strip())
+    most_shorted_stocks = [stock.text.strip() for stock in scraped_most_shorted]
     most_shorted_stocks.pop(0)
     return most_shorted_stocks

@@ -15,8 +15,7 @@ def stock_analysis(stock,time_interval):
             timeout=None
         )
 
-        analysis = handler.get_analysis()
-        summary = analysis.summary
+        summary = handler.get_analysis().summary
         overall_recommendation = summary['RECOMMENDATION']
         print(time_interval,"=",overall_recommendation)
         return overall_recommendation
@@ -37,8 +36,8 @@ def nyse(stock, time_interval):
             timeout=None
         )
 
-        analysis = handler.get_analysis()
-        summary = analysis.summary
+        # analysis = 
+        summary = handler.get_analysis().summary
         overall_recommendation = summary['RECOMMENDATION']
         print(time_interval,"=",overall_recommendation)
         return overall_recommendation

@@ -1,8 +1,2 @@
 
-MA
-AAPL
-EQIX
-CNI
-EA
-BGFV
-BBIG
+RHP

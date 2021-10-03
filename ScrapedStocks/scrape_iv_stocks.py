@@ -28,14 +28,8 @@ def scrape_highest_iv_stocks():
     r = session.get(main_page_url,headers=headers)
     headers['X-XSRF-TOKEN'] = unquote(unquote(session.cookies.get_dict()['XSRF-TOKEN']))
     response = session.request("GET", url, headers=headers, data=payload)
-    data = response.json()
-    dataFrame = data['data']
-    for stock_quote in dataFrame:
-        stock_ticker = stock_quote['baseSymbol']
-        if stock_ticker not in highest_iv_stocks:
-            highest_iv_stocks.append(stock_ticker)
-    # print(highest_iv_stocks)
-    return highest_iv_stocks
+    return [stock_ticker['baseSymbol'] for stock_ticker in response.json()['data'] if stock_ticker not in highest_iv_stocks]
+
 
 
 

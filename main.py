@@ -7,6 +7,7 @@ from ScrapedStocks.scrape_iv_stocks import scrape_highest_iv_stocks
 from ScrapedStocks.webscrape_most_shorted_stocks import \
     scrape_most_shorted_stocks
 from send_text import analyze_equities
+# from sell import analyze_equities
 
 most_shorted_stocks = scrape_most_shorted_stocks()
 iv_stocks = scrape_highest_iv_stocks()
@@ -40,10 +41,11 @@ if __name__ == '__main__':
     print("Going to run everyday at 7:30 mst")
     while True:
         schedule.run_pending()
-        # main()
-        now = datetime.now()
-        if now.hour == 20 and now.minute == 1:
-            schedule.cancel_job(task)
-            print("Sleeping...")
-        time.sleep(1)
         main()
+        # now = datetime.now()
+        # if now.hour == 20 and now.minute == 1:
+        #     schedule.cancel_job(task)
+        #     print("Sleeping...")
+        # time.sleep(1)
+        # # main()
+        
