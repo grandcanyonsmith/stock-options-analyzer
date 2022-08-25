@@ -11,6 +11,8 @@ html-parser = "*"
 bs4 = "*"
 schedule="*"
 python-dotenv = "*"
+"html.parser" = "*"
+dotenv = "*"
 
 [dev-packages]
 
