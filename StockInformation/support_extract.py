@@ -75,13 +75,13 @@ def create_resistance_report(ticker, current_price, previous_close):
     
 
 def calculate_stock_percentage_change(current_price, previous_close):
-    return round(((current_price - previous_close) / previous_close) * 100, 2) if previous_close else None
+    return round((-(current_price - previous_close) / previous_close) * 100, 2) if previous_close else None
 
 def calculate_percentage_drop_needed_to_break_resistance(current_price,resistance):
-    return round(((resistance - current_price) / current_price) * 100, 2)
+    return round(((-(resistance - current_price) / current_price) * 100)-100, 2)
 
 def calculate_stock_gain_needed_to_break_next_resistance(current_price,next_resistance):
-    return round(((next_resistance - current_price) / current_price) * 100, 2) if next_resistance else None
+    return round(((-(next_resistance - current_price) / current_price) * 100)+100, 2) if next_resistance else None
 
 def calculate_percentage_change_in_stock(current_price, previous_close, resistance, next_resistance):
     values = [previous_close, resistance, next_resistance]

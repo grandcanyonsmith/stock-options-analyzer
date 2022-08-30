@@ -19,6 +19,7 @@ def get_stocks_already_sent_today():
 
 
 def add_stock_to_already_sent_today_list(stock):
+    print(stock)
     with open("bought.txt", "a") as stock_names:
         stock_names.write("\n"+stock)
 
@@ -31,7 +32,9 @@ def send_client_text(**kwargs):
             "\n" + "(" + kwargs["past_time_interval"] + ")" + "Support: $" + str(kwargs["resistance"]) + "        (-" + str(kwargs["drop_needed"]) + "%)",
         from_='+13852336341',
         to=["+18016237631"]
+    
     )
+    print(message)
 
 def analyze_equities(stock, equity_type):
     try:
@@ -64,7 +67,7 @@ def analyze_equities(stock, equity_type):
                                     stocks_already_sent_today = get_stocks_already_sent_today()
                                     if stock not in stocks_already_sent_today:
                                         for phone_number in client_phone_contact:
-                                            send_client_text(phone_number=phone_number,stock=stock,current_price=current_price,resistance=break_through['resistance'],day_gain=day_gain,drop_needed=drop_needed,stocks_already_sent_today=stocks_already_sent_today,next_resistance=break_through['next_resistance'],past_time_interval=str(break_through['past_time_interval']),next_time_interval=str(break_through['next_time_interval']), equity_type=equity_type, client=client, one_hour_recommendation=one_hour_recommendation)
+                                            send_client_text(phone_number=phone_number,stock=stock,current_price=current_price,resistance=break_through['resistance'],day_gain=day_gain,drop_needed=drop_needed,stocks_already_sent_today=stocks_already_sent_today,next_resistance=break_through['next_resistance'],past_time_interval=str(break_through['past_time_interval']),next_time_interval=str(break_through['next_time_interval']), equity_type=equity_type, client=client, one_hour_recommendation=one_hour_recommendation, gain_needed=gain_needed)
                                         add_stock_to_already_sent_today_list(stock)
                                     else:
                                         print("Already sent text for", stock)
