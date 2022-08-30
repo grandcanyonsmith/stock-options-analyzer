@@ -41,15 +41,15 @@ def analyze_equities(stock, equity_type):
         one_month = stock_analysis(stock,'1M')
         if one_month == 'STRONG_BUY':
             one_week = stock_analysis(stock,'1W')
-            if one_week == 'STRONG_BUY' or one_week == 'BUY':
+            if one_week == 'STRONG_BUY':
                 one_day = stock_analysis(stock,'1d')
-                if one_day == 'STRONG_BUY' or one_day == 'BUY':
+                if one_day == 'STRONG_BUY':
                     four_hours = stock_analysis(stock,'4h')
-                    if four_hours == 'STRONG_BUY' or four_hours == 'BUY':
+                    if four_hours == 'STRONG_BUY':
                         one_hour_recommendation = stock_analysis(stock,'1h')
-                        if one_hour_recommendation == 'STRONG_BUY' or one_hour_recommendation == 'BUY':
+                        if one_hour_recommendation == 'STRONG_BUY':
                             fifteen_minute_recommendation = stock_analysis(stock,'15m')
-                            if fifteen_minute_recommendation == 'STRONG_BUY' or fifteen_minute_recommendation == 'BUY':
+                            if fifteen_minute_recommendation == 'STRONG_BUY':
                                 five_minute_recommendation = stock_analysis(stock,'5m')
                                 current_price, previous_close = get_stock_open_and_close_price(stock)
                                 print(f'\n{stock} (${current_price} yesterday was ${previous_close})')

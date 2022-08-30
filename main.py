@@ -4,7 +4,7 @@ from send_text import analyze_equities
 
 most_shorted_stocks = scrape_most_shorted_stocks()
 iv_stocks = scrape_highest_iv_stocks()
-
+®
 with open("ScrapedStocks/150_motley_fool_stocks.txt", "r") as stock_name:
     stock_list = [i.strip() for line in stock_name for i in line.split(",") if i]
 
@@ -18,4 +18,5 @@ def main(iv_stocks, stock_list, most_shorted_stocks):
 
 
 if __name__ == "__main__":
-    main(iv_stocks, stock_list, most_shorted_stocks)
+    while True:
+        main(iv_stocks, stock_list, most_shorted_stocks)
