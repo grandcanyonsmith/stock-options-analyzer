@@ -53,7 +53,7 @@ def analyze_equities(stock, equity_type):
                                 five_minute_recommendation = stock_analysis(stock,'5m')
                                 current_price, previous_close = get_stock_open_and_close_price(stock)
                                 print(f'\n{stock} (${current_price} yesterday was ${previous_close})')
-            
+
                                 break_through = create_resistance_report(stock, current_price, previous_close)
                                 print(break_through)
                                 if break_through['break_through'] == 'True':
@@ -73,4 +73,3 @@ def analyze_equities(stock, equity_type):
                                         print("Already sent text for", stock)
     except Exception as e:
         print(e)
-        pass

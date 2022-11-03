@@ -22,8 +22,7 @@ def stock_analysis(stock,time_interval):
 
     except:
         Exception
-        stock_analysis = nyse(stock,time_interval)
-        return stock_analysis
+        return nyse(stock,time_interval)
 
 def nyse(stock, time_interval):
     try:
