@@ -5,7 +5,8 @@ load_dotenv()
 finnhub_api_key= os.getenv('FINNHUB_API_KEY_2')
 
 def get_stock_open_and_close_price(ticker):
-    url = 'https://finnhub.io/api/v1/quote?symbol={}&token={}'.format(ticker, finnhub_api_key)
+    url = f'https://finnhub.io/api/v1/quote?symbol={ticker}&token={finnhub_api_key}'
+
     response = requests.get(url)
     today_price_quote = response.json()
     return round(float(today_price_quote['c']), 2), round(float(today_price_quote['pc']), 2)
@@ -17,13 +18,10 @@ def extract_stock_previous_and_current_price(ticker):
 
 
 def get_stock_resistance_levels(ticker, interval):
-    url = (
-        'https://finnhub.io/api/v1/scan/support-resistance'
-        '?symbol={}&resolution={}&token={}'
-    ).format(ticker, interval, finnhub_api_key)
+    url = f'https://finnhub.io/api/v1/scan/support-resistance?symbol={ticker}&resolution={interval}&token={finnhub_api_key}'
+
     r = requests.get(url).json()
-    levels = [round(level, 2) for level in r['levels']]
-    return levels
+    return [round(level, 2) for level in r['levels']]
 
 
 def check_if_resistance_broken(ticker, interval, current_price, previous_close):
@@ -39,18 +37,27 @@ def check_if_resistance_broken(ticker, interval, current_price, previous_close):
             print(resistance_levels[i + 1])
             print(resistance)
             print(interval)
-            if i != (len(resistance_levels) - 1):
-                next_interval = resistance_levels[i + 1]
-                breakthrough = 'True'
-                sonson = {'break_through': "True", 'resistance': resistance, 'past_time_interval': interval, 'next_resistance': next_highest_resistance, 'next_time_interval': resistance_levels[i + 1], "next_highest_resistance": next_highest_resistance} if i != (len(resistance_levels) - 1) else {'break_through': True, 'breakthrough_level': resistance, 'past_time_interval': interval, 'next_time_interval': None}
-                # son = {"break_through": "True","price":current_price,"Resistance":level,"time_interval":interval,"next_highest_resistance": next_highest_resistance}
-                # return {'break_through': True, 'breakthrough_level': resistance, 'past_time_interval': interval, 'next_time_interval': resistance_levels[i + 1]} if i != (len(resistance_levels) - 1) else {'break_through': True, 'breakthrough_level': resistance, 'past_time_interval': interval, 'next_time_interval': None}
-                return sonson
-                break
-                # return breakthrough, resistance, interval, next_interval
-            else:
-                
+            if i == len(resistance_levels) - 1:
                 return {'breakthrough_level': None, 'resistance': resistance, 'next_resistance': next_highest_resistance, 'percentage_change': calculate_stock_percentage_change(current_price, previous_close), 'percentage_drop_needed': calculate_percentage_drop_needed_to_break_resistance(current_price, resistance), 'percentage_gain_needed': calculate_stock_gain_needed_to_break_next_resistance(current_price, next_highest_resistance), 'ticker': ticker, 'current_price': current_price, 'previous_close': previous_close, 'next_highest_resistance': next_highest_resistance}
+            next_interval = resistance_levels[i + 1]
+            breakthrough = 'True'
+            return (
+                {
+                    'break_through': "True",
+                    'resistance': resistance,
+                    'past_time_interval': interval,
+                    'next_resistance': next_highest_resistance,
+                    'next_time_interval': resistance_levels[i + 1],
+                    "next_highest_resistance": next_highest_resistance,
+                }
+                if i != (len(resistance_levels) - 1)
+                else {
+                    'break_through': True,
+                    'breakthrough_level': resistance,
+                    'past_time_interval': interval,
+                    'next_time_interval': None,
+                }
+            )
     # return None
 
 def get_all_resistance_levels_for_stock(ticker,current_price,previous_close):
@@ -85,6 +92,6 @@ def calculate_stock_gain_needed_to_break_next_resistance(current_price,next_resi
 
 def calculate_percentage_change_in_stock(current_price, previous_close, resistance, next_resistance):
     values = [previous_close, resistance, next_resistance]
-    for i in range(len(values)):
-        if values[i]:
-            return round(((values[i] - current_price) / values[i]) * 100, 2)
+    for value in values:
+        if value:
+            return round((value - current_price) / value * 100, 2)
