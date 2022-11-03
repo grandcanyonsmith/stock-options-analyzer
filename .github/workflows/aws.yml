@@ -93,3 +93,6 @@ jobs:
         service: ${{ env.ECS_SERVICE }}
         cluster: ${{ env.ECS_CLUSTER }}
         wait-for-service-stability: true
+    - name: CodeGuru Reviewer
+      uses: aws-actions/codeguru-reviewer@v1.1
+
