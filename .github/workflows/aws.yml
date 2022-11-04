@@ -1,11 +1,9 @@
 on:
   push:
     branches:
-      - master
       - main
   pull_request:
     branches:
-      - master
       - main
 
 jobs:
@@ -15,7 +13,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0   # Required
+        fetch-depth: 1
    
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1

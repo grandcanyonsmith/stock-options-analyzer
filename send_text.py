@@ -24,7 +24,7 @@ def add_stock_to_already_sent_today_list(stock):
         stock_names.write("\n"+stock)
 
 def send_client_text(**kwargs):
-    print("sucessfully Sent", kwargs["phone_number"])
+    print("successfully Sent", kwargs["phone_number"])
     message = kwargs["client"].messages.create(
         body=" Trade Alert: " + kwargs["stock"] + " $" + str(kwargs["current_price"]) + "       +" + str(kwargs["day_gain"]) + "%  " + kwargs["equity_type"] + " " + 
             "\n=======================" +
@@ -61,7 +61,7 @@ def analyze_equities(stock, equity_type):
                                     drop_needed = calculate_percentage_drop_needed_to_break_resistance(break_through['current_price'],break_through['resistance'])
                                     try:
                                         gain_needed = calculate_stock_gain_needed_to_break_next_resistance(break_through['current_price'],break_through['next_resistance'])
-                                    except:
+                                    except Exception:
                                         gain_needed = 0
                                     print(gain_needed)
                                     stocks_already_sent_today = get_stocks_already_sent_today()
