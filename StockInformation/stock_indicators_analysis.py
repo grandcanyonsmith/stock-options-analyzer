@@ -41,6 +41,7 @@ def nyse(stock, time_interval):
         print(time_interval,"=",overall_recommendation)
         return overall_recommendation
     except:
-        Exception
+        logging.exception('ZeroDivisionError: %s', e)
     
+
 
