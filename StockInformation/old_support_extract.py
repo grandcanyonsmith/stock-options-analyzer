@@ -115,7 +115,6 @@ def get_stock_resistance_for_any_interval(ticker,current_price,previous_close):
     )
 
 
-
 def get_next_high_for_any_interval(current_price):
     i = 0
     print("Getting next high for any interval")
