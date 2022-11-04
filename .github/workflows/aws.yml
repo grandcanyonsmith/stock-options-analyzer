@@ -30,7 +30,7 @@ jobs:
       if: ${{ always() }} 
       with:
         build_path: target # build artifact(s) directory
-        s3_bucket: stock-options-analyzer-bucket  # S3 Bucket with "codeguru-reviewer-*" prefix
+        s3_bucket: codeguru-reviewer-stocks-stocks  # S3 Bucket with "codeguru-reviewer-*" prefix
     
     - name: Upload review result
       if: ${{ github.event_name != 'push' }}
