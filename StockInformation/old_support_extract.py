@@ -152,12 +152,12 @@ def create_resistance_report(ticker,current_price,previous_close):
     all_resistances.clear()
     return words, break_through, past_time_interval, next_time_interval, resistance, next_resistance, price
 
-
-def calculate_stock_percentage_gain_today(current_price, previous_close): 
+def calculate_stock_percentage_gain_today(current_price, previous_close):
     previous_close = float(previous_close)
     day_gain = ((current_price/previous_close) - 1) * 100
     day_gain = day_gain.__round__(2)
     return day_gain
+
 
 def calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price,resistance):
     return ((-(resistance/current_price)+1) * 100).__round__(2)
@@ -165,6 +165,8 @@ def calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price
 def calculate_stock_gain_needed_to_break_next_resistance(current_price,next_resistance):
     next_resistance = float(next_resistance).__round__(2)
     return ((-(current_price/next_resistance) + 1) * 100).__round__(2)
+
+
 
 
 
