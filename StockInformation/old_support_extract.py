@@ -157,8 +157,6 @@ def calculate_stock_percentage_gain_today(current_price, previous_close, day_gai
     day_gain = day_gain.__round__(2)
     return day_gain
 
-
-
 def calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price,resistance):
     return ((-(resistance/current_price)+1) * 100).__round__(2)
     
