@@ -10,6 +10,7 @@ finnhub_api_key_2 = os.getenv('FINNHUB_API_KEY_2')
 
 all_resistances = []
 
+
 def extract_stock_todays_price_and_previous_close(ticker):
     url = f'https://finnhub.io/api/v1/quote?symbol={ticker}&token={finnhub_api_key_1}'
 
@@ -18,10 +19,13 @@ def extract_stock_todays_price_and_previous_close(ticker):
     previous_close = float(today_price_quote['pc']).__round__(2)
     current_price = float(today_price_quote['c']).__round__(2)
     return current_price, previous_close
-    
+
+
 def extract_stock_previous_and_current_price(ticker):
-    current_price, previous_close = extract_stock_todays_price_and_previous_close(ticker)
+    current_price, previous_close = extract_stock_todays_price_and_previous_close(
+        ticker)
     return current_price, previous_close
+
 
 def get_resistance_levels(ticker, interval):
     url = f'https://finnhub.io/api/v1/scan/support-resistance?symbol={str(ticker)}&resolution={str(interval)}&token={finnhub_api_key_2}'
@@ -32,16 +36,17 @@ def get_resistance_levels(ticker, interval):
 
     if resistance_levels:
         for x in resistance_levels:
-            json = {"interval": interval,"resistance":x}
+            json = {"interval": interval, "resistance": x}
             all_resistances.append(json)
     return resistance_levels
+
 
 def check_if_resistance_broken(ticker, interval, current_price, previous_close):
     print(
         f"Checking if resistance broken for {ticker} at {interval} time interval"
     )
 
-    resistance_levels = get_resistance_levels(ticker,interval)
+    resistance_levels = get_resistance_levels(ticker, interval)
     print(resistance_levels)
     try:
         resistance_levels = get_resistance_levels(ticker, interval)
@@ -50,19 +55,22 @@ def check_if_resistance_broken(ticker, interval, current_price, previous_close):
             level = float(level).__round__(2)
             i += 1
             try:
-                next_highest_resistance = float(resistance_levels[i]).__round__(2)
+                next_highest_resistance = float(
+                    resistance_levels[i]).__round__(2)
             except:
                 Exception
                 next_highest_resistance = 500
                 print(next_highest_resistance)
             if current_price < level:
-                json = {"break_through": "False","price":current_price,"Resistance":level,"time_interval":interval,"next_highest_resistance":next_highest_resistance}
+                json = {"break_through": "False", "price": current_price, "Resistance": level,
+                        "time_interval": interval, "next_highest_resistance": next_highest_resistance}
                 print(json)
                 break
             else:
                 print(level)
                 if previous_close > level:
-                    json = {"break_through": "False","price":current_price,"Resistance": "No Resistance Exists","time_interval":interval,"next_highest_resistance":next_highest_resistance}
+                    json = {"break_through": "False", "price": current_price, "Resistance": "No Resistance Exists",
+                            "time_interval": interval, "next_highest_resistance": next_highest_resistance}
                     print(json)
                     continue
                 else:
@@ -73,23 +81,26 @@ def check_if_resistance_broken(ticker, interval, current_price, previous_close):
                         res_level = "No higher resistance"
                     try:
                         if res_level > current_price:
-                            json = {"break_through": "True","price":current_price,"Resistance":level,"time_interval":interval,"next_highest_resistance": next_highest_resistance}
+                            json = {"break_through": "True", "price": current_price, "Resistance": level,
+                                    "time_interval": interval, "next_highest_resistance": next_highest_resistance}
                             print(json)
                             break
                     except:
                         if res_level == "No higher resistance":
 
-                            json = {"break_through": "True","price":current_price,"Resistance":level,"time_interval":interval,"next_highest_resistance": "No higher resistance"}
+                            json = {"break_through": "True", "price": current_price, "Resistance": level,
+                                    "time_interval": interval, "next_highest_resistance": "No higher resistance"}
                             print(json)
                             break
                     else:
 
-                        next_highest_resistance = float(resistance_levels[i+1]).__round__(2)
+                        next_highest_resistance = float(
+                            resistance_levels[i+1]).__round__(2)
                         support = float(resistance_levels[i]).__round__(2)
-                        json = {"break_through": "True","price":current_price,"Resistance":support,"time_interval":interval,"next_highest_resistance": next_highest_resistance}
+                        json = {"break_through": "True", "price": current_price, "Resistance": support,
+                                "time_interval": interval, "next_highest_resistance": next_highest_resistance}
                         print(json)
                         break
-
 
         return json
     except:
@@ -97,12 +108,13 @@ def check_if_resistance_broken(ticker, interval, current_price, previous_close):
         json = {"break_through": "No Resistance Found for this level"}
         return json
 
-def get_stock_resistance_for_any_interval(ticker,current_price,previous_close):
+
+def get_stock_resistance_for_any_interval(ticker, current_price, previous_close):
     resistance_level_bank = [  # To create a `list`, try to use `list` comprehension instead of a loop. List comprehension is the preferred way to make a list using Python, and it's simpler and easier to understand than using a loop.
         check_if_resistance_broken(
             ticker, level, current_price, previous_close
         )
-        for level in ['15','30','60','D','W','M']
+        for level in ['15', '30', '60', 'D', 'W', 'M']
     ]
 
     return next(
@@ -118,7 +130,7 @@ def get_stock_resistance_for_any_interval(ticker,current_price,previous_close):
 def get_next_high_for_any_interval(current_price):
     i = 0
     print("Getting next high for any interval")
-    sorted_resistances = sorted(all_resistances, key = lambda i: i['resistance'])
+    sorted_resistances = sorted(all_resistances, key=lambda i: i['resistance'])
     for x in sorted_resistances:
         i += 1
         if sorted_resistances[i-1]['resistance'] < current_price:
@@ -126,11 +138,14 @@ def get_next_high_for_any_interval(current_price):
         resistance = sorted_resistances[i]['resistance']
         return resistance, sorted_resistances[i]['interval']
 
-def create_resistance_report(ticker,current_price,previous_close):
-    get_resistance = get_stock_resistance_for_any_interval(ticker,current_price,previous_close)
+
+def create_resistance_report(ticker, current_price, previous_close):
+    get_resistance = get_stock_resistance_for_any_interval(
+        ticker, current_price, previous_close)
 
     if get_resistance is not None:
-        next_highest_resistance, interval = get_next_high_for_any_interval(current_price)
+        next_highest_resistance, interval = get_next_high_for_any_interval(
+            current_price)
         resistance = float(get_resistance['Resistance']).__round__(2)
         break_through = get_resistance['break_through']
         past_time_interval = get_resistance['time_interval']
@@ -151,26 +166,21 @@ def create_resistance_report(ticker,current_price,previous_close):
     all_resistances.clear()
     return words, break_through, past_time_interval, next_time_interval, resistance, next_resistance, price
 
-def calculate_stock_percentage_gain_today(current_price, previous_close, day_gain):
-    previous_close = float(previous_close)
-    day_gain = ((current_price/previous_close) - 1) * 100
-    day_gain = day_gain.__round__(2)
-    return day_gain
 
-def calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price,resistance):
+def calculate_stock_percentage_gain_today(current_price, previous_close):
+    """
+    Calculate the percentage gain of a stock from the previous close.
+    :param current_price:
+    :param previous_close:
+    :return:
+    """
+    return ((current_price/previous_close) - 1) * 100
+
+
+def calculate_stock_percentage_drop_needed_for_breaking_resistance(current_price, resistance):
     return ((-(resistance/current_price)+1) * 100).__round__(2)
-    
-def calculate_stock_gain_needed_to_break_next_resistance(current_price,next_resistance):
+
+
+def calculate_stock_gain_needed_to_break_next_resistance(current_price, next_resistance):
     next_resistance = float(next_resistance).__round__(2)
     return ((-(current_price/next_resistance) + 1) * 100).__round__(2)
-
-
-
-
-
-
-
-
-
-
-
